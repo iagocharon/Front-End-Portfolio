@@ -1,0 +1,108 @@
+h2 {
+  margin-top: 100px !important;
+}
+
+.item {
+  border-top: solid 5px #526bbb;
+  position: relative;
+  height: 180px;
+}
+
+.row {
+  width: 100%;
+}
+
+img {
+  max-height: 150px;
+}
+
+ul {
+  list-style: none;
+}
+
+.edit-buttons {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translate(150%, -50%);
+}
+
+.create-button button:hover,
+.edit-button button:hover,
+.delete-button button:hover {
+  background-color: #ffffff;
+  border: 1px solid #526bbb;
+  color: #526bbb;
+}
+
+.create-button button,
+.edit-button button,
+.delete-button button {
+  padding: 8px;
+  border: none;
+  border-radius: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  color: white;
+  background-color: #526bbb;
+  border: 1px solid #526bbb;
+  margin: 5px 0;
+}
+
+.create-button button i,
+.edit-button button i,
+.delete-button button i {
+  font-size: 15px;
+  width: 15px !important;
+  height: 15px !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.edit-button button i {
+  padding-left: 3px;
+}
+
+.move-cursor {
+  cursor: grab;
+}
+
+.move-cursor:active {
+  cursor: grabbing;
+}
+
+.modal-title {
+  font-size: 1.5em !important;
+  font-weight: 500 !important;
+  margin: 0 !important;
+}
+
+label {
+  font-size: 14px !important;
+}
+
+@media (max-width: 768px) {
+  .item {
+    height: auto;
+  }
+
+  .logo {
+    margin-bottom: 30px;
+  }
+
+  .tipo,
+  .institucion,
+  .tiempo,
+  .lugar {
+    margin: 5px 0;
+  }
+
+  .edit-buttons {
+    top: 100%;
+    right: 5px;
+    transform: translate(0, -100%);
+  }
+}

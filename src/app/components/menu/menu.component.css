@@ -1,0 +1,114 @@
+header {
+  height: 100px;
+  padding: 0 5%;
+  z-index: 998;
+  background-color: #121212f3;
+}
+
+img {
+  height: 50px;
+}
+
+.buttons,
+.social {
+  display: flex;
+}
+
+.social i {
+  font-size: 25px;
+}
+
+.social > div {
+  height: 35px;
+}
+
+.social a {
+  color: white;
+  background-color: #526bbb;
+  height: 35px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  width: 35px;
+  z-index: 999;
+  margin-left: 5px;
+  border: 1px solid #526bbb;
+}
+
+.log-button {
+  color: white;
+  font-size: 15px;
+  height: 35px;
+  width: 110px;
+  background-color: #526bbb;
+  border-radius: 35px;
+  margin-left: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.edit-button {
+  color: white;
+  font-size: 15px;
+  height: 35px;
+  padding: 0 10px;
+  background-color: #526bbb;
+  border-radius: 35px;
+  margin-left: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.edit-button i,
+.log-button i {
+  margin-right: 5px;
+}
+
+.social a:hover,
+.log-button:hover,
+.edit-button:hover {
+  color: #526bbb !important;
+  background-color: white;
+}
+
+.modal-title {
+  font-size: 1.5em !important;
+  font-weight: 500 !important;
+  margin: 0 !important;
+}
+
+.log-button p {
+  margin: 0;
+}
+
+.log-button a {
+  display: flex;
+}
+
+@media (max-width: 768px) {
+  .buttons {
+    justify-content: center;
+    align-items: center;
+  }
+
+  .edit-button {
+    display: none;
+  }
+
+  .log-button p {
+    display: none;
+  }
+
+  .log-button {
+    width: 35px;
+  }
+
+  .log-button i {
+    margin: 0;
+  }
+}

@@ -1,0 +1,361 @@
+<div *ngIf="usuario != undefined">
+  <h2
+    class="text-center mt-5 mb-3 fs-1"
+    *ngIf="isLogged || educaciones.length > 0"
+  >
+    Formación Académica
+  </h2>
+</div>
+<div class="container" *ngIf="usuario != undefined">
+  <div class="list-group">
+    <div
+      cdkDropList
+      (cdkDropListDropped)="OnDrop($event)"
+      [cdkDropListData]="educaciones"
+      [cdkDropListEnterPredicate]="dropListEnterPredicate"
+    >
+      <div
+        cdkDrag
+        *ngFor="let educacion of educaciones"
+        class="item bg-light px-5 py-3 mb-3 rounded fs-5 d-flex justify-content-center align-items-center"
+        [ngClass]="{ 'move-cursor': isLogged }"
+        [cdkDragDisabled]="!isLogged"
+        cdkDragLockAxis="y"
+      >
+        <div
+          class="row d-flex justify-content-center align-items-center text-center"
+        >
+          <div class="logo col-md-2">
+            <img [src]="educacion.logoInstitucion" class="img-fluid" alt="" />
+          </div>
+          <div class="tipo col-md-3">
+            {{ educacion.tipo }}
+          </div>
+          <div class="institucion col-md-2">
+            {{ educacion.institucion }}
+          </div>
+          <div class="tiempo col-md-2">
+            {{ educacion.anioInicio }} - {{ educacion.anioFin }}
+          </div>
+          <div class="lugar col-md-3">
+            {{ educacion.lugar }}
+          </div>
+        </div>
+        <div class="edit-buttons" *ngIf="isLogged">
+          <div class="edit-button">
+            <button
+              class="edit-button-box"
+              title="edit"
+              data-bs-toggle="modal"
+              [attr.data-bs-target]="'#editarEstudioModal' + educacion.id"
+            >
+              <i class="fas fa-edit"></i>
+            </button>
+          </div>
+          <div class="delete-button">
+            <button
+              class="delete-button-box"
+              title="delete"
+              data-bs-toggle="modal"
+              [attr.data-bs-target]="'#deleteEstudioModal' + educacion.id"
+            >
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+        </div>
+
+        <div
+          class="modal fade"
+          [id]="'editarEstudioModal' + educacion.id"
+          tabindex="-1"
+          aria-labelledby="editarEstudioModalLabel"
+          aria-hidden="true"
+        >
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="editarEstudioModalLabel">
+                  Editar Estudio
+                </h5>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div class="modal-body">
+                <form
+                  #f="ngForm"
+                  (ngSubmit)="OnUpdate(educacion.id!)"
+                  novalidate
+                >
+                  <div class="form-group">
+                    <label for="institucion">Instutución</label>
+                    <input
+                      type="text"
+                      name="institucion"
+                      id="institucion"
+                      class="form-control"
+                      [(ngModel)]="educacion.institucion"
+                      required
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label for="logo">URL Logo</label>
+                    <input
+                      type="text"
+                      name="logo"
+                      id="logo"
+                      class="form-control"
+                      [(ngModel)]="educacion.logoInstitucion"
+                      required
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label for="tipo">Tipo</label>
+                    <input
+                      type="text"
+                      name="tipo"
+                      id="tipo"
+                      class="form-control"
+                      [(ngModel)]="educacion.tipo"
+                      required
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label for="anioInicio">Año de Inicio</label>
+                    <input
+                      type="text"
+                      name="anioInicio"
+                      id="anioInicio"
+                      class="form-control"
+                      [(ngModel)]="educacion.anioInicio"
+                      required
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label for="anioFin">Año de Finalización</label>
+                    <input
+                      type="text"
+                      name="anioFin"
+                      id="anioFin"
+                      class="form-control"
+                      [(ngModel)]="educacion.anioFin"
+                      required
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label for="lugar">Ubicación</label>
+                    <input
+                      type="text"
+                      name="lugar"
+                      id="lugar"
+                      class="form-control"
+                      [(ngModel)]="educacion.lugar"
+                      required
+                    />
+                  </div>
+                  <div class="modal-footer mt-5">
+                    <button
+                      type="button"
+                      class="btn btn-secondary"
+                      data-bs-dismiss="modal"
+                    >
+                      Cerrar
+                    </button>
+                    <input
+                      type="submit"
+                      class="btn btn-primary"
+                      data-bs-dismiss="modal"
+                      value="Guardar"
+                    />
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="modal fade"
+          [id]="'deleteEstudioModal' + educacion.id"
+          tabindex="-1"
+          aria-labelledby="eliminarEstudioModalLabel"
+          aria-hidden="true"
+        >
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="eliminarEstudioModalLabel">
+                  Eliminar Estudio
+                </h5>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div class="modal-body">
+                <form
+                  #f="ngForm"
+                  (ngSubmit)="OnDelete(educacion.id!)"
+                  novalidate
+                >
+                  <div class="form-group">
+                    <p>
+                      ¿Está seguro que quiere eliminar "{{
+                        educacion.institucion
+                      }}"?
+                    </p>
+                  </div>
+                  <div class="modal-footer mt-5">
+                    <button
+                      type="button"
+                      class="btn btn-secondary"
+                      data-bs-dismiss="modal"
+                    >
+                      Cerrar
+                    </button>
+                    <input
+                      type="submit"
+                      class="btn btn-primary"
+                      data-bs-dismiss="modal"
+                      value="Eliminar"
+                    />
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    class="nuevaEducacion container d-flex justify-content-center align-items-center"
+  >
+    <div class="create-button" *ngIf="isLogged">
+      <button
+        class="create-button-box"
+        title="create"
+        data-bs-toggle="modal"
+        data-bs-target="#createEducacionModal"
+      >
+        <i class="fas fa-plus"></i>
+      </button>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  id="createEducacionModal"
+  tabindex="-1"
+  aria-labelledby="createEducacionModalLabel"
+  aria-hidden="true"
+  *ngIf="usuario != undefined"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="createEducacionModalLabel">
+          Agregar Educacion
+        </h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form #f="ngForm" (ngSubmit)="OnCreate()" novalidate>
+          <div class="form-group">
+            <label for="institucion">Institución</label>
+            <input
+              type="text"
+              name="institucion"
+              id="institucion"
+              class="form-control"
+              [(ngModel)]="nuevaEducacion.institucion"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="logoInstitucion">Logo de la Institución</label>
+            <input
+              type="text"
+              name="logoInstitucion"
+              id="logoInstitucion"
+              class="form-control"
+              [(ngModel)]="nuevaEducacion.logoInstitucion"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="tipo">Tipo</label>
+            <input
+              type="text"
+              name="tipo"
+              id="tipo"
+              class="form-control"
+              [(ngModel)]="nuevaEducacion.tipo"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="anioInicio">Año de Inicio</label>
+            <input
+              type="text"
+              name="anioInicio"
+              id="anioInicio"
+              class="form-control"
+              [(ngModel)]="nuevaEducacion.anioInicio"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="anioFin">Año de Finalización</label>
+            <input
+              type="text"
+              name="anioFin"
+              id="anioFin"
+              class="form-control"
+              [(ngModel)]="nuevaEducacion.anioFin"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="lugar">Ubicación</label>
+            <input
+              type="text"
+              name="lugar"
+              id="lugar"
+              class="form-control"
+              [(ngModel)]="nuevaEducacion.lugar"
+              required
+            />
+          </div>
+
+          <div class="modal-footer mt-5">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Cerrar
+            </button>
+            <input
+              type="submit"
+              class="btn btn-primary"
+              data-bs-dismiss="modal"
+              value="Guardar"
+            />
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

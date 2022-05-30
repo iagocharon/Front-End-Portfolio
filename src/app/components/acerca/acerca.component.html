@@ -1,0 +1,366 @@
+<div
+  class="acerca"
+  *ngIf="usuario != undefined"
+  [ngStyle]="{ 'background-image': 'url(' + usuario.imagenPortada + ')' }"
+>
+  <div class="edit-button" *ngIf="isLogged">
+    <button
+      type="button"
+      class="edit-button-box"
+      title="edit"
+      data-bs-toggle="modal"
+      data-bs-target="#portadaModal"
+    >
+      <i class="fas fa-edit"></i>
+    </button>
+  </div>
+  <div class="container-fluid">
+    <div class="container">
+      <div class="row">
+        <div
+          class="imagen-perfil col-6 offset-3 offset-md-0 col-md-2 mb-3 mb-md-0 d-flex justify-content-center"
+        >
+          <img
+            [src]="usuario.imagenPerfil"
+            class="img-fluid rounded-3"
+            alt=""
+          />
+          <div class="edit-button" *ngIf="isLogged">
+            <button
+              class="edit-button-box"
+              title="edit"
+              data-bs-toggle="modal"
+              data-bs-target="#perfilModal"
+            >
+              <i class="fas fa-edit"></i>
+            </button>
+          </div>
+        </div>
+        <div
+          class="nombre col-md-4 col-12 mb-3 mb-md-0 p-md-3 d-flex flex-column align-items-center justify-content-center text-center"
+        >
+          <div class="nombre-completo py-2">
+            {{ usuario.nombre }} {{ usuario.apellido }}
+            <div class="edit-button" *ngIf="isLogged">
+              <button
+                class="edit-button-box"
+                title="edit"
+                data-bs-toggle="modal"
+                data-bs-target="#nombreModal"
+              >
+                <i class="fas fa-edit"></i>
+              </button>
+            </div>
+          </div>
+          <div class="titulo py-2">
+            {{ usuario.titulo }}
+            <div class="edit-button" *ngIf="isLogged">
+              <button
+                class="edit-button-box"
+                title="edit"
+                data-bs-toggle="modal"
+                data-bs-target="#tituloModal"
+              >
+                <i class="fas fa-edit"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div
+          class="info col-md-6 col-12 p-md-4 d-flex flex-column align-items-center justify-content-center text-center text-md-start"
+        >
+          {{ usuario.info }}
+          <div class="edit-button" *ngIf="isLogged">
+            <button
+              class="edit-button-box"
+              title="edit"
+              data-bs-toggle="modal"
+              data-bs-target="#infoModal"
+            >
+              <i class="fas fa-edit"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  id="portadaModal"
+  tabindex="-1"
+  aria-labelledby="portadaModalLabel"
+  aria-hidden="true"
+  *ngIf="usuario != undefined"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="portadaModalLabel">Imagen de Portada</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form #f="ngForm" (ngSubmit)="OnUpdate()" novalidate>
+          <div class="form-group">
+            <label for="imagenPortada">URL</label>
+            <input
+              type="text"
+              name="imagenPortada"
+              id="imagenPortada"
+              class="form-control"
+              [(ngModel)]="usuario.imagenPortada"
+              required
+            />
+          </div>
+          <div class="modal-footer mt-5">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Cerrar
+            </button>
+            <input
+              type="submit"
+              class="btn btn-primary"
+              data-bs-dismiss="modal"
+              value="Guardar"
+            />
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  id="perfilModal"
+  tabindex="-1"
+  aria-labelledby="perfilModalLabel"
+  aria-hidden="true"
+  *ngIf="usuario != undefined"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="perfilModalLabel">Imagen de Perfil</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form #f="ngForm" (ngSubmit)="OnUpdate()" novalidate>
+          <div class="form-group">
+            <label for="imagenPerfil">URL</label>
+            <input
+              type="text"
+              name="imagenPerfil"
+              id="imagenPerfil"
+              class="form-control"
+              [(ngModel)]="usuario.imagenPerfil"
+              required
+            />
+          </div>
+          <div class="modal-footer mt-5">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Cerrar
+            </button>
+            <input
+              type="submit"
+              class="btn btn-primary"
+              data-bs-dismiss="modal"
+              value="Guardar"
+            />
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  id="tituloModal"
+  tabindex="-1"
+  aria-labelledby="tituloModalLabel"
+  aria-hidden="true"
+  *ngIf="usuario != undefined"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="tituloModalLabel">Título</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form #f="ngForm" (ngSubmit)="OnUpdate()" novalidate>
+          <div class="form-group">
+            <label for="titulo">Título</label>
+            <input
+              type="text"
+              name="titulo"
+              id="titulo"
+              class="form-control"
+              [(ngModel)]="usuario.titulo"
+              required
+            />
+          </div>
+          <div class="modal-footer mt-5">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Cerrar
+            </button>
+            <input
+              type="submit"
+              class="btn btn-primary"
+              data-bs-dismiss="modal"
+              value="Guardar"
+            />
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  id="nombreModal"
+  tabindex="-1"
+  aria-labelledby="nombreModalLabel"
+  aria-hidden="true"
+  *ngIf="usuario != undefined"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="nombreModalLabel">Nombre Completo</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form #f="ngForm" (ngSubmit)="OnUpdate()" novalidate>
+          <div class="form-group">
+            <label for="nombre">Nombre</label>
+            <input
+              type="text"
+              name="nombre"
+              id="nombre"
+              class="form-control"
+              [(ngModel)]="usuario.nombre"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="apellido">Apellido</label>
+            <input
+              type="text"
+              name="apellido"
+              id="apellido"
+              class="form-control"
+              [(ngModel)]="usuario.apellido"
+              required
+            />
+          </div>
+          <div class="modal-footer mt-5">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Cerrar
+            </button>
+            <input
+              type="submit"
+              class="btn btn-primary"
+              data-bs-dismiss="modal"
+              value="Guardar"
+            />
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  id="infoModal"
+  tabindex="-1"
+  aria-labelledby="infoModalLabel"
+  aria-hidden="true"
+  *ngIf="usuario != undefined"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="infoModalLabel">Información</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form #f="ngForm" (ngSubmit)="OnUpdate()" novalidate>
+          <div class="form-group">
+            <label for="info">Información</label>
+            <textarea
+              rows="8"
+              maxlength="255"
+              name="info"
+              id="info"
+              class="form-control"
+              [(ngModel)]="usuario.info"
+              required
+            >
+<textarea></textarea
+            >
+          </div>
+          <div class="modal-footer mt-5">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Cerrar
+            </button>
+            <input
+              type="submit"
+              class="btn btn-primary"
+              data-bs-dismiss="modal"
+              value="Guardar"
+            />
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

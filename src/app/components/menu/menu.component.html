@@ -1,0 +1,181 @@
+<header
+  class="container-fluid d-flex justify-content-between align-items-center"
+>
+  <div class="logo">
+    <a class="navbar-brand" href="#">
+      <img
+        src="/assets/img/ArgentinaPrograma.png"
+        alt="Argentina Programa"
+        *ngIf="width >= 768"
+      />
+      <img
+        src="/assets/img/ArgentinaProgramaS.png"
+        alt="Argentina Programa"
+        *ngIf="width < 768"
+      />
+    </a>
+  </div>
+  <div class="buttons">
+    <div
+      class="edit-button"
+      *ngIf="isLogged && url != '/login' && url != '/registro'"
+      data-bs-toggle="modal"
+      data-bs-target="#editSocialModal"
+    >
+      <i class="fas fa-edit"></i>
+      Editar Redes Sociales
+    </div>
+    <div
+      class="social"
+      *ngIf="
+        ((route == null && isLogged) || route != null) &&
+        usuario != undefined &&
+        url != '/login' &&
+        url != '/registro'
+      "
+    >
+      <div *ngIf="usuario.whatsapp != null">
+        <a
+          href="https://api.whatsapp.com/send?phone={{ usuario.whatsapp }}"
+          target="_blank"
+        >
+          <i class="fab fa-whatsapp"></i>
+        </a>
+      </div>
+      <div *ngIf="usuario.instagram != null">
+        <a href="https://instagram.com/{{ usuario.instagram }}" target="_blank">
+          <i class="fab fa-instagram"></i>
+        </a>
+      </div>
+      <div *ngIf="usuario.facebook != null">
+        <a href="https://facebook.com/{{ usuario.facebook }}" target="_blank">
+          <i class="fab fa-facebook"></i>
+        </a>
+      </div>
+      <div *ngIf="usuario.twitter != null">
+        <a href="https://twitter.com/{{ usuario.twitter }}" target="_blank">
+          <i class="fab fa-twitter"></i>
+        </a>
+      </div>
+      <div *ngIf="usuario.github != null">
+        <a href="https://githubcom/{{ usuario.github }}" target="_blank">
+          <i class="fab fa-github"></i>
+        </a>
+      </div>
+    </div>
+    <div
+      class="log-button"
+      *ngIf="!isLogged && url != '/login' && url != '/registro'"
+    >
+      <a class="nav-link link-light" routerLink="/login"
+        ><i class="fas fa-sign-in-alt"></i>
+        <p>Log In</p>
+      </a>
+    </div>
+    <div class="log-button" *ngIf="isLogged" (click)="onLogOut()">
+      <i class="fas fa-sign-out-alt"></i>
+      <p>Log Out</p>
+    </div>
+  </div>
+</header>
+
+<div
+  class="modal fade"
+  id="editSocialModal"
+  tabindex="-1"
+  aria-labelledby="editSocialModalLabel"
+  aria-hidden="true"
+  *ngIf="usuario != undefined"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editSocialModalLabel">
+          Editar Redes Sociales
+        </h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form #f="ngForm" (ngSubmit)="OnUpdate()" novalidate>
+          <div class="form-group">
+            <label for="whatsapp"
+              >Whatsapp (Con codigo de área y país pero sin +)</label
+            >
+            <input
+              type="text"
+              name="whatsapp"
+              id="whatsapp"
+              class="form-control"
+              [(ngModel)]="usuario.whatsapp"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="instagram">Usuario de Instagram</label>
+            <input
+              type="text"
+              name="instagram"
+              id="instagram"
+              class="form-control"
+              [(ngModel)]="usuario.instagram"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="facebook">Usuario de Facebook</label>
+            <input
+              type="text"
+              name="facebook"
+              id="facebook"
+              class="form-control"
+              [(ngModel)]="usuario.facebook"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="twitter">Usuario de Twitter</label>
+            <input
+              type="text"
+              name="twitter"
+              id="twitter"
+              class="form-control"
+              [(ngModel)]="usuario.twitter"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="github">Usuario de GitHub</label>
+            <input
+              type="text"
+              name="github"
+              id="github"
+              class="form-control"
+              [(ngModel)]="usuario.github"
+              required
+            />
+          </div>
+          <div class="modal-footer mt-5">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Cerrar
+            </button>
+            <input
+              type="submit"
+              class="btn btn-primary"
+              data-bs-dismiss="modal"
+              value="Guardar"
+            />
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

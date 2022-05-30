@@ -1,0 +1,293 @@
+<div *ngIf="usuario != undefined">
+  <h2
+    class="text-center mt-5 mb-3 fs-1"
+    *ngIf="isLogged || softSkills.length > 0"
+  >
+    Soft Skills
+  </h2>
+</div>
+<div class="items m-auto" *ngIf="width >= 768">
+  <mat-grid-list
+    cdkDropListGroup
+    cols="3"
+    id="soft-skill-grid"
+    rowHeight="10:1"
+    class="container-fluid"
+  >
+    <mat-grid-tile
+      cdkDropList
+      *ngFor="let softSkill of softSkills; let i = index"
+      [cdkDropListData]="i"
+      class="d-flex justify-content-start align-items-center"
+    >
+      <div
+        cdkDrag
+        [cdkDragData]="i"
+        (cdkDragEntered)="OnDrag($event)"
+        class="position-relative"
+        [ngClass]="{ 'move-cursor': isLogged }"
+        [cdkDragDisabled]="!isLogged"
+      >
+        <div class="line d-flex justify-content-start align-items-center">
+          <i class="fa-solid fa-square-check"></i>{{ softSkill.nombre }}
+        </div>
+        <div class="edit-buttons" *ngIf="isLogged">
+          <div class="edit-button">
+            <button
+              class="edit-button-box"
+              title="edit"
+              data-bs-toggle="modal"
+              [attr.data-bs-target]="'#editarSoftSkillModal' + softSkill.id"
+            >
+              <i class="fas fa-edit"></i>
+            </button>
+          </div>
+          <div class="delete-button">
+            <button
+              class="delete-button-box"
+              title="delete"
+              data-bs-toggle="modal"
+              [attr.data-bs-target]="'#eliminarSoftSkillModal' + softSkill.id"
+            >
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+        </div>
+
+        <div
+          class="modal fade"
+          [id]="'editarSoftSkillModal' + softSkill.id"
+          tabindex="-1"
+          aria-labelledby="editarSoftSkillModalLabel"
+          aria-hidden="true"
+        >
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="editarSoftSkillModalLabel">
+                  Editar Soft Skill
+                </h5>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div class="modal-body">
+                <form
+                  #f="ngForm"
+                  (ngSubmit)="OnUpdate(softSkill.id!)"
+                  novalidate
+                >
+                  <div class="form-group">
+                    <label for="nombre">Nombre</label>
+                    <input
+                      type="text"
+                      name="nombre"
+                      id="nombre"
+                      class="form-control"
+                      [(ngModel)]="softSkill.nombre"
+                      required
+                    />
+                  </div>
+                  <div class="modal-footer mt-5">
+                    <button
+                      type="button"
+                      class="btn btn-secondary"
+                      data-bs-dismiss="modal"
+                    >
+                      Cerrar
+                    </button>
+                    <input
+                      type="submit"
+                      class="btn btn-primary"
+                      data-bs-dismiss="modal"
+                      value="Guardar"
+                    />
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </mat-grid-tile>
+  </mat-grid-list>
+</div>
+<div class="items m-auto" *ngIf="width < 768">
+  <mat-grid-list
+    cdkDropListGroup
+    cols="1"
+    id="soft-skill-grid-2"
+    rowHeight="10:1"
+    class="container-fluid"
+  >
+    <mat-grid-tile
+      cdkDropList
+      *ngFor="let softSkill of softSkills; let i = index"
+      [cdkDropListData]="i"
+      class="d-flex justify-content-start align-items-center"
+    >
+      <div
+        cdkDrag
+        [cdkDragData]="i"
+        (cdkDragEntered)="OnDrag($event)"
+        class="position-relative"
+        [ngClass]="{ 'move-cursor': isLogged }"
+        [cdkDragDisabled]="!isLogged"
+      >
+        <div class="line d-flex justify-content-start align-items-center">
+          <i class="fa-solid fa-square-check"></i>{{ softSkill.nombre }}
+        </div>
+        <div class="edit-buttons" *ngIf="isLogged">
+          <div class="edit-button">
+            <button
+              class="edit-button-box"
+              title="edit"
+              data-bs-toggle="modal"
+              [attr.data-bs-target]="'#editarSoftSkillModal' + softSkill.id"
+            >
+              <i class="fas fa-edit"></i>
+            </button>
+          </div>
+          <div class="delete-button">
+            <button
+              class="delete-button-box"
+              title="delete"
+              data-bs-toggle="modal"
+              [attr.data-bs-target]="'#eliminarSoftSkillModal' + softSkill.id"
+            >
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+        </div>
+
+        <div
+          class="modal fade"
+          [id]="'editarSoftSkillModal' + softSkill.id"
+          tabindex="-1"
+          aria-labelledby="editarSoftSkillModalLabel"
+          aria-hidden="true"
+        >
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="editarSoftSkillModalLabel">
+                  Editar Soft Skill
+                </h5>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div class="modal-body">
+                <form
+                  #f="ngForm"
+                  (ngSubmit)="OnUpdate(softSkill.id!)"
+                  novalidate
+                >
+                  <div class="form-group">
+                    <label for="nombre">Nombre</label>
+                    <input
+                      type="text"
+                      name="nombre"
+                      id="nombre"
+                      class="form-control"
+                      [(ngModel)]="softSkill.nombre"
+                      required
+                    />
+                  </div>
+                  <div class="modal-footer mt-5">
+                    <button
+                      type="button"
+                      class="btn btn-secondary"
+                      data-bs-dismiss="modal"
+                    >
+                      Cerrar
+                    </button>
+                    <input
+                      type="submit"
+                      class="btn btn-primary"
+                      data-bs-dismiss="modal"
+                      value="Guardar"
+                    />
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </mat-grid-tile>
+  </mat-grid-list>
+</div>
+
+<div
+  class="create-button container d-flex justify-content-center align-items-center mt-4"
+  *ngIf="isLogged"
+>
+  <button
+    class="create-button-box"
+    title="create"
+    data-bs-toggle="modal"
+    data-bs-target="#createSoftSkillModal"
+  >
+    <i class="fas fa-plus"></i>
+  </button>
+</div>
+
+<div
+  class="modal fade"
+  id="createSoftSkillModal"
+  tabindex="-1"
+  aria-labelledby="createModalLabel"
+  aria-hidden="true"
+  *ngIf="usuario != undefined"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="createModalLabel">Agregar Soft Skill</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form #f="ngForm" (ngSubmit)="OnCreate()" novalidate>
+          <div class="form-group">
+            <label for="nombre">Nombre</label>
+            <input
+              type="text"
+              name="nombre"
+              id="nombre"
+              class="form-control"
+              [(ngModel)]="nuevaSoftSkill.nombre"
+              required
+            />
+          </div>
+          <div class="modal-footer mt-5">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Cerrar
+            </button>
+            <input
+              type="submit"
+              class="btn btn-primary"
+              data-bs-dismiss="modal"
+              value="Guardar"
+            />
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,361 @@
+<div *ngIf="usuario != undefined">
+  <h2
+    class="text-center mt-5 mb-3 fs-1"
+    *ngIf="isLogged || experiencias.length > 0"
+  >
+    Experiencia Laboral
+  </h2>
+</div>
+<div class="container" *ngIf="usuario != undefined">
+  <div class="list-group">
+    <div
+      cdkDropList
+      (cdkDropListDropped)="OnDrop($event)"
+      [cdkDropListData]="experiencias"
+      [cdkDropListEnterPredicate]="dropListEnterPredicate"
+    >
+      <div
+        cdkDrag
+        *ngFor="let experiencia of experiencias"
+        class="item bg-light px-5 py-3 mb-3 rounded fs-5 d-flex justify-content-center align-items-center"
+        [ngClass]="{ 'move-cursor': isLogged }"
+        [cdkDragDisabled]="!isLogged"
+        cdkDragLockAxis="y"
+      >
+        <div
+          class="row d-flex justify-content-center align-items-center text-center"
+        >
+          <div class="logo col-md-2">
+            <img [src]="experiencia.logoInstitucion" class="img-fluid" alt="" />
+          </div>
+          <div class="cargo col-md-3">
+            {{ experiencia.cargo }}
+          </div>
+          <div class="institucion col-md-2">
+            {{ experiencia.institucion }}
+          </div>
+          <div class="tiempo col-md-2">
+            {{ experiencia.anioInicio }} - {{ experiencia.anioFin }}
+          </div>
+          <div class="lugar col-md-3">
+            {{ experiencia.lugar }}
+          </div>
+        </div>
+        <div class="edit-buttons" *ngIf="isLogged">
+          <div class="edit-button">
+            <button
+              class="edit-button-box"
+              title="edit"
+              data-bs-toggle="modal"
+              [attr.data-bs-target]="'#editarExperienciaModal' + experiencia.id"
+            >
+              <i class="fas fa-edit"></i>
+            </button>
+          </div>
+          <div class="delete-button">
+            <button
+              class="delete-button-box"
+              title="delete"
+              data-bs-toggle="modal"
+              [attr.data-bs-target]="
+                '#eliminarExperienciaModal' + experiencia.id
+              "
+            >
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+        </div>
+
+        <div
+          class="modal fade"
+          [id]="'editarExperienciaModal' + experiencia.id"
+          tabindex="-1"
+          aria-labelledby="editarExperienciaModalLabel"
+          aria-hidden="true"
+        >
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="editarExperienciaModalLabel">
+                  Editar Experiencia
+                </h5>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div class="modal-body">
+                <form
+                  #f="ngForm"
+                  (ngSubmit)="OnUpdate(experiencia.id!)"
+                  novalidate
+                >
+                  <div class="form-group">
+                    <label for="institucion">Instutución</label>
+                    <input
+                      type="text"
+                      name="institucion"
+                      id="institucion"
+                      class="form-control"
+                      [(ngModel)]="experiencia.institucion"
+                      required
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label for="logo">URL Logo</label>
+                    <input
+                      type="text"
+                      name="logo"
+                      id="logo"
+                      class="form-control"
+                      [(ngModel)]="experiencia.logoInstitucion"
+                      required
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label for="cargo">Cargo</label>
+                    <input
+                      type="text"
+                      name="cargo"
+                      id="cargo"
+                      class="form-control"
+                      [(ngModel)]="experiencia.cargo"
+                      required
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label for="anioInicio">Año de Inicio</label>
+                    <input
+                      type="text"
+                      name="anioInicio"
+                      id="anioInicio"
+                      class="form-control"
+                      [(ngModel)]="experiencia.anioInicio"
+                      required
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label for="anioFin">Año de Finalización</label>
+                    <input
+                      type="text"
+                      name="anioFin"
+                      id="anioFin"
+                      class="form-control"
+                      [(ngModel)]="experiencia.anioFin"
+                      required
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label for="lugar">Ubicación</label>
+                    <input
+                      type="text"
+                      name="lugar"
+                      id="lugar"
+                      class="form-control"
+                      [(ngModel)]="experiencia.lugar"
+                      required
+                    />
+                  </div>
+                  <div class="modal-footer mt-5">
+                    <button
+                      type="button"
+                      class="btn btn-secondary"
+                      data-bs-dismiss="modal"
+                    >
+                      Cerrar
+                    </button>
+                    <input
+                      type="submit"
+                      class="btn btn-primary"
+                      data-bs-dismiss="modal"
+                      value="Guardar"
+                    />
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="modal fade"
+          [id]="'eliminarExperienciaModal' + experiencia.id"
+          tabindex="-1"
+          aria-labelledby="eliminarExperienciaModalLabel"
+          aria-hidden="true"
+        >
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="eliminarExperienciaModalLabel">
+                  Eliminar Experiencia
+                </h5>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div class="modal-body">
+                <form
+                  #f="ngForm"
+                  (ngSubmit)="OnDelete(experiencia.id!)"
+                  novalidate
+                >
+                  <div class="form-group">
+                    <p>
+                      ¿Está seguro que quiere eliminar "{{
+                        experiencia.institucion
+                      }}"?
+                    </p>
+                  </div>
+                  <div class="modal-footer mt-5">
+                    <button
+                      type="button"
+                      class="btn btn-secondary"
+                      data-bs-dismiss="modal"
+                    >
+                      Cerrar
+                    </button>
+                    <input
+                      type="submit"
+                      class="btn btn-primary"
+                      data-bs-dismiss="modal"
+                      value="Eliminar"
+                    />
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    class="nuevaExperiencia container d-flex justify-content-center align-items-center"
+  >
+    <div class="create-button" *ngIf="isLogged">
+      <button
+        class="create-button-box"
+        title="create"
+        data-bs-toggle="modal"
+        data-bs-target="#createModal"
+      >
+        <i class="fas fa-plus"></i>
+      </button>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  id="createModal"
+  tabindex="-1"
+  aria-labelledby="createModalLabel"
+  aria-hidden="true"
+  *ngIf="usuario != undefined"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="createModalLabel">Agregar Experiencia</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form #f="ngForm" (ngSubmit)="OnCreate()" novalidate>
+          <div class="form-group">
+            <label for="institucion">Institución</label>
+            <input
+              type="text"
+              name="institucion"
+              id="institucion"
+              class="form-control"
+              [(ngModel)]="nuevaExperiencia.institucion"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="logoInstitucion">Logo de la Institución</label>
+            <input
+              type="text"
+              name="logoInstitucion"
+              id="logoInstitucion"
+              class="form-control"
+              [(ngModel)]="nuevaExperiencia.logoInstitucion"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="cargo">Cargo</label>
+            <input
+              type="text"
+              name="cargo"
+              id="cargo"
+              class="form-control"
+              [(ngModel)]="nuevaExperiencia.cargo"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="anioInicio">Año de Inicio</label>
+            <input
+              type="text"
+              name="anioInicio"
+              id="anioInicio"
+              class="form-control"
+              [(ngModel)]="nuevaExperiencia.anioInicio"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="anioFin">Año de Finalización</label>
+            <input
+              type="text"
+              name="anioFin"
+              id="anioFin"
+              class="form-control"
+              [(ngModel)]="nuevaExperiencia.anioFin"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="lugar">Ubicación</label>
+            <input
+              type="text"
+              name="lugar"
+              id="lugar"
+              class="form-control"
+              [(ngModel)]="nuevaExperiencia.lugar"
+              required
+            />
+          </div>
+
+          <div class="modal-footer mt-5">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Cerrar
+            </button>
+            <input
+              type="submit"
+              class="btn btn-primary"
+              data-bs-dismiss="modal"
+              value="Guardar"
+            />
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

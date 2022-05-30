@@ -1,0 +1,38 @@
+.menu-background {
+  height: 100px;
+  background-color: rgba(0, 0, 0, 0.85);
+}
+
+.texto-registro {
+  color: #526bbb;
+}
+
+.btn-block {
+  color: #ffffff;
+  border-color: #526bbb;
+  background-color: #526bbb;
+  border-radius: 38px;
+}
+
+.btn-block:hover {
+  color: #526bbb;
+  background-color: #ffffff;
+}
+
+@media screen and (min-width: 701px) {
+  .card {
+    width: 50vw !important;
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .card {
+    width: 90vw !important;
+  }
+}
+
+app-footer {
+  position: absolute;
+  bottom: 0;
+  width: 100vw;
+}

@@ -1,0 +1,30 @@
+app-footer {
+  width: 100vw;
+}
+
+.footer-index {
+  position: absolute;
+  bottom: 0;
+}
+
+.info {
+  margin-top: 50px;
+  width: 50%;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+h1 {
+  font-size: 3em;
+  font-weight: 700;
+}
+
+h2 {
+  margin-top: 50px;
+  font-size: 2em;
+}
+
+p {
+  font-size: 1.5em;
+  line-height: 1.5em;
+}

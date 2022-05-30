@@ -1,0 +1,114 @@
+.acerca {
+  margin-top: -100px;
+  width: 100vw;
+  padding-top: 350px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  color: white;
+}
+
+.acerca .edit-button {
+  top: 100px;
+  right: 50px;
+}
+
+.imagen-perfil {
+  position: relative;
+}
+
+.container-fluid {
+  background-color: #ffffff15;
+  padding: 20px 0;
+}
+
+.nombre {
+  text-transform: uppercase;
+}
+
+.nombre-completo {
+  font-size: 2em;
+  font-weight: 600;
+  position: relative;
+}
+
+.titulo {
+  font-size: 1.2em;
+  font-weight: 400;
+  position: relative;
+}
+
+.info {
+  font-size: 1.1em;
+  line-height: 2.2em;
+  border-left: 1px solid #ffffff;
+  position: relative;
+}
+
+.edit-button {
+  position: absolute;
+}
+
+.imagen-perfil .edit-button,
+.info .edit-button {
+  transform: translate(25%, -50%);
+  top: 0;
+  right: 0;
+}
+
+.nombre-completo .edit-button,
+.titulo .edit-button {
+  right: 0;
+  top: 50%;
+  transform: translate(100%, -50%);
+}
+
+.edit-button button:hover {
+  background-color: #ffffff;
+  border: 1px solid #526bbb;
+  color: #526bbb;
+}
+
+.edit-button button {
+  padding: 8px;
+  border: none;
+  border-radius: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  color: white;
+  background-color: #526bbb;
+}
+
+.edit-button button i {
+  font-size: 15px;
+  width: 15px !important;
+  height: 15px !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-left: 3px;
+}
+
+.modal-title {
+  font-size: 1.5em !important;
+  font-weight: 500 !important;
+  margin: 0 !important;
+}
+
+@media (max-width: 768px) {
+  .acerca {
+    padding-top: 100px;
+    color: black;
+    background-color: rgba(89, 89, 89, 0.1);
+    background-size: contain;
+  }
+
+  .container-fluid {
+    background-color: #ffffff00;
+  }
+
+  .info .edit-button {
+    transform: translate(-25%, -50%);
+  }
+}

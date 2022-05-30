@@ -1,0 +1,14 @@
+footer {
+  background-color: rgba(0, 0, 0, 0.85);
+  height: 50px;
+  color: #6f6f6f;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 100px;
+}
+
+p {
+  margin: 0;
+  padding: 0;
+}

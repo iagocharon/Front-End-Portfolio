@@ -1,0 +1,122 @@
+h2 {
+  margin-top: 100px !important;
+}
+
+a {
+  color: black;
+  font-size: 2em;
+  font-weight: 500;
+  line-height: 1.5em;
+}
+
+p {
+  font-size: 1.1em;
+  line-height: 1.5em;
+  text-align: justify;
+}
+
+#proyectos-grid {
+  width: 65%;
+}
+
+.border-primary {
+  border-color: #526bbb !important;
+}
+
+.box .descripcion {
+  height: 110px;
+}
+
+.imagen {
+  width: 100%;
+  height: 250px;
+  overflow: hidden;
+}
+
+.imagen .responsive {
+  min-height: 100%;
+  max-width: 100%;
+  height: auto;
+  width: auto;
+}
+
+.edit-buttons {
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+
+  display: flex;
+  z-index: 2;
+}
+
+.create-button button:hover,
+.edit-button button:hover,
+.delete-button button:hover {
+  background-color: #ffffff;
+  border: 1px solid #526bbb;
+  color: #526bbb;
+}
+
+.create-button button,
+.edit-button button,
+.delete-button button {
+  padding: 8px;
+  border: none;
+  border-radius: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 900;
+  color: white;
+  background-color: #526bbb;
+  border: 1px solid #526bbb;
+  margin: 5px 0;
+  z-index: 3;
+}
+
+.create-button button i,
+.edit-button button i,
+.delete-button button i {
+  font-size: 15px;
+  width: 15px !important;
+  height: 15px !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.edit-button button i {
+  padding-left: 3px;
+}
+
+.move-cursor {
+  cursor: grab;
+}
+
+.move-cursor:active {
+  cursor: grabbing;
+}
+
+.modal-title {
+  font-size: 1.5em !important;
+  font-weight: 500 !important;
+  margin: 0 !important;
+}
+
+.items {
+  overflow: hidden;
+}
+
+label {
+  font-size: 14px !important;
+}
+
+@media (max-width: 768px) {
+  mat-grid-list {
+    width: 90vw !important;
+  }
+
+  .box .descripcion {
+    height: auto;
+  }
+}

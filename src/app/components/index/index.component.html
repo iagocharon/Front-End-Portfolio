@@ -1,0 +1,30 @@
+<app-menu></app-menu>
+<div *ngIf="route == null && !isLogged" class="info text-center">
+  <h1>¡Bienvenido!</h1>
+  <p>
+    Este proyecto consiste en un <strong>portfolio web</strong> totalmente
+    editable, que se almacena en una base de datos. Permite la creación de
+    varios usuarios e implementa seguridad JWT.
+  </p>
+  <h2>Uso de la App</h2>
+  <p>
+    Se puede ingresar o crear un nuevo usuario, haciendo click en el botón
+    <em>Log In</em> en la esquina superior derecha. Si no desea iniciar sesión,
+    pero desea ver algun perfil, puede ingresar a cualquier perfil en el
+    directorio <em>"/nombreDeUsuario"</em>. Una vez logueado, puede editar su
+    perfil, utilizando los botones disponibles en cada elemento editable. El
+    sitio también cuenta con <em>drag and drop</em> para poder reacomodar la
+    información cuando sea necesario.
+  </p>
+</div>
+<div *ngIf="(route == null && isLogged) || route != null">
+  <app-acerca></app-acerca>
+  <app-experiencias></app-experiencias>
+  <app-estudios></app-estudios>
+  <app-hard-skills></app-hard-skills>
+  <app-soft-skills></app-soft-skills>
+  <app-proyectos></app-proyectos>
+</div>
+<app-footer
+  [ngClass]="{ 'footer-index': !isLogged && route == null }"
+></app-footer>

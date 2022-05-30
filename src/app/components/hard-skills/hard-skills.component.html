@@ -1,0 +1,507 @@
+<div *ngIf="usuario != undefined">
+  <h2
+    class="text-center mt-5 mb-3 fs-1"
+    *ngIf="isLogged || hardSkills.length > 0"
+  >
+    Hard Skills
+  </h2>
+</div>
+<div *ngIf="usuario != undefined">
+  <div
+    class="items"
+    [ngStyle]="{ height: ceil(hardSkills.length / 2) * 180 + 'px' }"
+    *ngIf="width <= 768"
+  >
+    <mat-grid-list
+      cdkDropListGroup
+      cols="2"
+      class="container d-flex justify-content-center align-items-center"
+      id="hard-skill-grid-1"
+    >
+      <mat-grid-tile
+        cdkDropList
+        [cdkDropListData]="i"
+        *ngFor="let hardSkill of hardSkills; let i = index"
+        class="d-flex justify-content-center align-items-center"
+      >
+        <div
+          cdkDrag
+          [cdkDragData]="i"
+          (cdkDragEntered)="OnDrag($event)"
+          class="position-relative"
+          [ngClass]="{ 'move-cursor': isLogged }"
+          [cdkDragDisabled]="!isLogged || width <= 768"
+        >
+          <div
+            class="progress mx-3 position-relative overflow-visible"
+            attr.data-value="{{ hardSkill.nivel }}"
+          >
+            <span class="progress-left">
+              <span
+                class="progress-bar border-primary"
+                *ngIf="hardSkill.nivel >= 50"
+                [ngStyle]="{
+                  transform:
+                    'rotate(' + ((hardSkill.nivel - 50) / 100) * 360 + 'deg)'
+                }"
+              ></span>
+            </span>
+            <span class="progress-right">
+              <span
+                class="progress-bar border-primary"
+                *ngIf="hardSkill.nivel >= 50"
+                [ngStyle]="{ transform: 'rotate(180deg)' }"
+              ></span>
+              <span
+                class="progress-bar border-primary"
+                *ngIf="hardSkill.nivel > 50"
+                [ngStyle]="{
+                  transform:
+                    'rotate' + (hardSkill.nivel / 100) * 360 + '(180deg)'
+                }"
+              ></span>
+            </span>
+            <div
+              class="progress-value w-100 h-100 rounded-circle d-flex align-items-center justify-content-center position-relative"
+            >
+              <div class="h4 font-weight-bold">{{ hardSkill.nombre }}</div>
+            </div>
+          </div>
+
+          <div class="edit-buttons" *ngIf="isLogged">
+            <div class="edit-button">
+              <button
+                class="edit-button-box"
+                title="edit"
+                data-bs-toggle="modal"
+                [attr.data-bs-target]="'#editarHardSkillModal' + hardSkill.id"
+              >
+                <i class="fas fa-edit"></i>
+              </button>
+            </div>
+            <div class="delete-button">
+              <button
+                class="delete-button-box"
+                title="delete"
+                data-bs-toggle="modal"
+                [attr.data-bs-target]="'#eliminarHardSkillModal' + hardSkill.id"
+              >
+                <i class="fas fa-times"></i>
+              </button>
+            </div>
+          </div>
+
+          <div
+            class="modal fade"
+            [id]="'editarHardSkillModal' + hardSkill.id"
+            tabindex="-1"
+            aria-labelledby="editarHardSkillModalLabel"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="editarHardSkillModalLabel">
+                    Editar HardSkill
+                  </h5>
+                  <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                  ></button>
+                </div>
+                <div class="modal-body">
+                  <form
+                    #f="ngForm"
+                    (ngSubmit)="OnUpdate(hardSkill.id!)"
+                    novalidate
+                  >
+                    <div class="form-group">
+                      <label for="nombre">Nombre</label>
+                      <input
+                        type="text"
+                        name="nombre"
+                        id="nombre"
+                        class="form-control"
+                        [(ngModel)]="hardSkill.nombre"
+                        required
+                      />
+                    </div>
+                    <div class="form-group">
+                      <label for="nivel">Nivel de Dominio</label>
+                      <input
+                        type="text"
+                        name="nivel"
+                        id="nivel"
+                        class="form-control"
+                        [(ngModel)]="hardSkill.nivel"
+                        required
+                      />
+                    </div>
+                    <div class="modal-footer mt-5">
+                      <button
+                        type="button"
+                        class="btn btn-secondary"
+                        data-bs-dismiss="modal"
+                      >
+                        Cerrar
+                      </button>
+                      <input
+                        type="submit"
+                        class="btn btn-primary"
+                        data-bs-dismiss="modal"
+                        value="Guardar"
+                      />
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="modal fade"
+            [id]="'eliminarHardSkillModal' + hardSkill.id"
+            tabindex="-1"
+            aria-labelledby="eliminarHardSkillModalLabel"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="eliminarHardSkillModalLabel">
+                    Eliminar HardSkill
+                  </h5>
+                  <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                  ></button>
+                </div>
+                <div class="modal-body">
+                  <form
+                    #f="ngForm"
+                    (ngSubmit)="OnDelete(hardSkill.id!)"
+                    novalidate
+                  >
+                    <div class="form-group">
+                      <p>
+                        ¿Está seguro que quiere eliminar "{{
+                          hardSkill.nombre
+                        }}"?
+                      </p>
+                    </div>
+                    <div class="modal-footer mt-5">
+                      <button
+                        type="button"
+                        class="btn btn-secondary"
+                        data-bs-dismiss="modal"
+                      >
+                        Cerrar
+                      </button>
+                      <input
+                        type="submit"
+                        class="btn btn-primary"
+                        data-bs-dismiss="modal"
+                        value="Eliminar"
+                      />
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </div>
+  <div
+    class="items"
+    [ngStyle]="{ height: ceil(hardSkills.length / 5) * 180 + 'px' }"
+    *ngIf="width > 768"
+  >
+    <mat-grid-list
+      cdkDropListGroup
+      cols="5"
+      class="container d-flex justify-content-center align-items-center"
+      id="hard-skill-grid"
+    >
+      <mat-grid-tile
+        cdkDropList
+        [cdkDropListData]="i"
+        *ngFor="let hardSkill of hardSkills; let i = index"
+        class="d-flex justify-content-center align-items-center"
+      >
+        <div
+          cdkDrag
+          [cdkDragData]="i"
+          (cdkDragEntered)="OnDrag($event)"
+          class="position-relative"
+          [ngClass]="{ 'move-cursor': isLogged }"
+          [cdkDragDisabled]="!isLogged"
+        >
+          <div
+            class="progress mx-3 position-relative overflow-visible"
+            attr.data-value="{{ hardSkill.nivel }}"
+          >
+            <span class="progress-left">
+              <span
+                class="progress-bar border-primary"
+                *ngIf="hardSkill.nivel >= 50"
+                [ngStyle]="{
+                  transform:
+                    'rotate(' + ((hardSkill.nivel - 50) / 100) * 360 + 'deg)'
+                }"
+              ></span>
+            </span>
+            <span class="progress-right">
+              <span
+                class="progress-bar border-primary"
+                *ngIf="hardSkill.nivel >= 50"
+                [ngStyle]="{ transform: 'rotate(180deg)' }"
+              ></span>
+              <span
+                class="progress-bar border-primary"
+                *ngIf="hardSkill.nivel > 50"
+                [ngStyle]="{
+                  transform:
+                    'rotate' + (hardSkill.nivel / 100) * 360 + '(180deg)'
+                }"
+              ></span>
+            </span>
+            <div
+              class="progress-value w-100 h-100 rounded-circle d-flex align-items-center justify-content-center position-relative"
+            >
+              <div class="h4 font-weight-bold">{{ hardSkill.nombre }}</div>
+            </div>
+          </div>
+
+          <div class="edit-buttons" *ngIf="isLogged">
+            <div class="edit-button">
+              <button
+                class="edit-button-box"
+                title="edit"
+                data-bs-toggle="modal"
+                [attr.data-bs-target]="'#editarHardSkillModal' + hardSkill.id"
+              >
+                <i class="fas fa-edit"></i>
+              </button>
+            </div>
+            <div class="delete-button">
+              <button
+                class="delete-button-box"
+                title="delete"
+                data-bs-toggle="modal"
+                [attr.data-bs-target]="'#eliminarHardSkillModal' + hardSkill.id"
+              >
+                <i class="fas fa-times"></i>
+              </button>
+            </div>
+          </div>
+
+          <div
+            class="modal fade"
+            [id]="'editarHardSkillModal' + hardSkill.id"
+            tabindex="-1"
+            aria-labelledby="editarHardSkillModalLabel"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="editarHardSkillModalLabel">
+                    Editar HardSkill
+                  </h5>
+                  <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                  ></button>
+                </div>
+                <div class="modal-body">
+                  <form
+                    #f="ngForm"
+                    (ngSubmit)="OnUpdate(hardSkill.id!)"
+                    novalidate
+                  >
+                    <div class="form-group">
+                      <label for="nombre">Nombre</label>
+                      <input
+                        type="text"
+                        name="nombre"
+                        id="nombre"
+                        class="form-control"
+                        [(ngModel)]="hardSkill.nombre"
+                        required
+                      />
+                    </div>
+                    <div class="form-group">
+                      <label for="nivel">Nivel de Dominio</label>
+                      <input
+                        type="text"
+                        name="nivel"
+                        id="nivel"
+                        class="form-control"
+                        [(ngModel)]="hardSkill.nivel"
+                        required
+                      />
+                    </div>
+                    <div class="modal-footer mt-5">
+                      <button
+                        type="button"
+                        class="btn btn-secondary"
+                        data-bs-dismiss="modal"
+                      >
+                        Cerrar
+                      </button>
+                      <input
+                        type="submit"
+                        class="btn btn-primary"
+                        data-bs-dismiss="modal"
+                        value="Guardar"
+                      />
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="modal fade"
+            [id]="'eliminarHardSkillModal' + hardSkill.id"
+            tabindex="-1"
+            aria-labelledby="eliminarHardSkillModalLabel"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="eliminarHardSkillModalLabel">
+                    Eliminar HardSkill
+                  </h5>
+                  <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                  ></button>
+                </div>
+                <div class="modal-body">
+                  <form
+                    #f="ngForm"
+                    (ngSubmit)="OnDelete(hardSkill.id!)"
+                    novalidate
+                  >
+                    <div class="form-group">
+                      <p>
+                        ¿Está seguro que quiere eliminar "{{
+                          hardSkill.nombre
+                        }}"?
+                      </p>
+                    </div>
+                    <div class="modal-footer mt-5">
+                      <button
+                        type="button"
+                        class="btn btn-secondary"
+                        data-bs-dismiss="modal"
+                      >
+                        Cerrar
+                      </button>
+                      <input
+                        type="submit"
+                        class="btn btn-primary"
+                        data-bs-dismiss="modal"
+                        value="Eliminar"
+                      />
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </div>
+</div>
+<div
+  class="create-button container d-flex justify-content-center align-items-center mt-4"
+  *ngIf="isLogged"
+>
+  <button
+    class="create-button-box"
+    title="create"
+    data-bs-toggle="modal"
+    data-bs-target="#createHardSkillModal"
+  >
+    <i class="fas fa-plus"></i>
+  </button>
+</div>
+
+<div
+  class="modal fade"
+  id="createHardSkillModal"
+  tabindex="-1"
+  aria-labelledby="createModalLabel"
+  aria-hidden="true"
+  *ngIf="usuario != undefined"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="createModalLabel">Agregar Hard Skill</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form #f="ngForm" (ngSubmit)="OnCreate()" novalidate>
+          <div class="form-group">
+            <label for="nombre">Nombre</label>
+            <input
+              type="text"
+              name="nombre"
+              id="nombre"
+              class="form-control"
+              [(ngModel)]="nuevaHardSkill.nombre"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="nivel">Nivel de Dominio</label>
+            <input
+              type="text"
+              name="nivel"
+              id="nivel"
+              class="form-control"
+              [(ngModel)]="nuevaHardSkill.nivel"
+              required
+            />
+          </div>
+          <div class="modal-footer mt-5">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Cerrar
+            </button>
+            <input
+              type="submit"
+              class="btn btn-primary"
+              data-bs-dismiss="modal"
+              value="Guardar"
+            />
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
