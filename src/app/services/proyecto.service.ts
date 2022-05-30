@@ -7,14 +7,12 @@ import { Proyecto } from '../models/proyecto';
   providedIn: 'root',
 })
 export class ProyectoService {
-  proyectoURL = 'http://localhost:8080/proyecto/';
+  proyectoURL = 'https://back-end-portfolio.herokuapp.com/proyecto/';
 
   constructor(private httpClient: HttpClient) {}
 
   public getById(id: number): Observable<Proyecto> {
-    return this.httpClient.get<Proyecto>(
-      this.proyectoURL + `detail/${id}`
-    );
+    return this.httpClient.get<Proyecto>(this.proyectoURL + `detail/${id}`);
   }
 
   public createProyecto(

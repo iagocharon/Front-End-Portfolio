@@ -12,7 +12,7 @@ import { Proyecto } from '../models/proyecto';
   providedIn: 'root',
 })
 export class UsuarioService {
-  usuarioURL = 'http://localhost:8080/usuario/';
+  usuarioURL = 'https://back-end-portfolio.herokuapp.com/usuario/';
 
   constructor(private httpClient: HttpClient) {}
 

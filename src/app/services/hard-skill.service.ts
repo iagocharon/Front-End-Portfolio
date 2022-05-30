@@ -7,14 +7,12 @@ import { HardSkill } from '../models/hardSkill';
   providedIn: 'root',
 })
 export class HardSkillService {
-  hardSkillURL = 'http://localhost:8080/hardSkill/';
+  hardSkillURL = 'https://back-end-portfolio.herokuapp.com/hardSkill/';
 
   constructor(private httpClient: HttpClient) {}
 
   public getById(id: number): Observable<HardSkill> {
-    return this.httpClient.get<HardSkill>(
-      this.hardSkillURL + `detail/${id}`
-    );
+    return this.httpClient.get<HardSkill>(this.hardSkillURL + `detail/${id}`);
   }
 
   public createHardSkill(

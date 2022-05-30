@@ -30,24 +30,24 @@ export class ExperienciasComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.tokenService.getToken()) {
-      this.usuarioService
-        .getByUsername(window.sessionStorage.getItem('AuthUserName')!)
-        .subscribe((data) => {
-          this.usuario = data;
-        });
-      this.usuarioService
-        .getExperiencias(window.sessionStorage.getItem('AuthUserName')!)
-        .subscribe((data) => {
-          this.experiencias = data;
-          this.experiencias = this.experiencias.sort((a, b) =>
-            a.id! < b.id! ? -1 : 1
-          );
-        });
       if (
         window.sessionStorage.getItem('AuthUserName') ==
           this.activatedRoute.snapshot.paramMap.get('usuario') ||
         this.activatedRoute.snapshot.paramMap.get('usuario') == null
       ) {
+        this.usuarioService
+          .getByUsername(window.sessionStorage.getItem('AuthUserName')!)
+          .subscribe((data) => {
+            this.usuario = data;
+          });
+        this.usuarioService
+          .getExperiencias(window.sessionStorage.getItem('AuthUserName')!)
+          .subscribe((data) => {
+            this.experiencias = data;
+            this.experiencias = this.experiencias.sort((a, b) =>
+              a.id! < b.id! ? -1 : 1
+            );
+          });
         this.isLogged = true;
       } else {
         this.isLogged = false;

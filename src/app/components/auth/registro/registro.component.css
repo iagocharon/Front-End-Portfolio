@@ -36,3 +36,9 @@ app-footer {
   bottom: 0;
   width: 100vw;
 }
+
+@media (max-width: 768px) {
+  app-footer {
+    position: relative;
+  }
+}

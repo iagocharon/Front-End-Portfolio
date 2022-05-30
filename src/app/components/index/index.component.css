@@ -28,3 +28,21 @@ p {
   font-size: 1.5em;
   line-height: 1.5em;
 }
+
+@media (max-width: 768px) {
+  .info {
+    width: 95%;
+  }
+  h1 {
+    font-size: 2em;
+  }
+  h2 {
+    font-size: 1.5em;
+  }
+  p {
+    font-size: 1.2em;
+  }
+  .footer-index {
+    position: relative;
+  }
+}

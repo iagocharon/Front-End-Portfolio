@@ -7,14 +7,12 @@ import { Educacion } from '../models/educacion';
   providedIn: 'root',
 })
 export class EducacionService {
-  educacionURL = 'http://localhost:8080/educacion/';
+  educacionURL = 'https://back-end-portfolio.herokuapp.com/educacion/';
 
   constructor(private httpClient: HttpClient) {}
 
   public getById(id: number): Observable<Educacion> {
-    return this.httpClient.get<Educacion>(
-      this.educacionURL + `detail/${id}`
-    );
+    return this.httpClient.get<Educacion>(this.educacionURL + `detail/${id}`);
   }
 
   public createEducacion(

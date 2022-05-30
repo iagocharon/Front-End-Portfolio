@@ -39,24 +39,24 @@ export class HardSkillsComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.tokenService.getToken()) {
-      this.usuarioService
-        .getByUsername(window.sessionStorage.getItem('AuthUserName')!)
-        .subscribe((data) => {
-          this.usuario = data;
-        });
-      this.usuarioService
-        .getHardSkills(window.sessionStorage.getItem('AuthUserName')!)
-        .subscribe((data) => {
-          this.hardSkills = data;
-          this.hardSkills = this.hardSkills.sort((a, b) =>
-            a.id! < b.id! ? -1 : 1
-          );
-        });
       if (
         window.sessionStorage.getItem('AuthUserName') ==
           this.activatedRoute.snapshot.paramMap.get('usuario') ||
         this.activatedRoute.snapshot.paramMap.get('usuario') == null
       ) {
+        this.usuarioService
+          .getByUsername(window.sessionStorage.getItem('AuthUserName')!)
+          .subscribe((data) => {
+            this.usuario = data;
+          });
+        this.usuarioService
+          .getHardSkills(window.sessionStorage.getItem('AuthUserName')!)
+          .subscribe((data) => {
+            this.hardSkills = data;
+            this.hardSkills = this.hardSkills.sort((a, b) =>
+              a.id! < b.id! ? -1 : 1
+            );
+          });
         this.isLogged = true;
       } else {
         this.isLogged = false;

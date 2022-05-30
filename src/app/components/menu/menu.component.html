@@ -38,41 +38,58 @@
         <a
           href="https://api.whatsapp.com/send?phone={{ usuario.whatsapp }}"
           target="_blank"
+          *ngIf="usuario.whatsapp.length > 0"
         >
           <i class="fab fa-whatsapp"></i>
         </a>
       </div>
       <div *ngIf="usuario.instagram != null">
-        <a href="https://instagram.com/{{ usuario.instagram }}" target="_blank">
+        <a
+          href="https://instagram.com/{{ usuario.instagram }}"
+          target="_blank"
+          *ngIf="usuario.whatsapp.length > 0"
+        >
           <i class="fab fa-instagram"></i>
         </a>
       </div>
       <div *ngIf="usuario.facebook != null">
-        <a href="https://facebook.com/{{ usuario.facebook }}" target="_blank">
+        <a
+          href="https://facebook.com/{{ usuario.facebook }}"
+          target="_blank"
+          *ngIf="usuario.whatsapp.length > 0"
+        >
           <i class="fab fa-facebook"></i>
         </a>
       </div>
       <div *ngIf="usuario.twitter != null">
-        <a href="https://twitter.com/{{ usuario.twitter }}" target="_blank">
+        <a
+          href="https://twitter.com/{{ usuario.twitter }}"
+          target="_blank"
+          *ngIf="usuario.whatsapp.length > 0"
+        >
           <i class="fab fa-twitter"></i>
         </a>
       </div>
       <div *ngIf="usuario.github != null">
-        <a href="https://githubcom/{{ usuario.github }}" target="_blank">
+        <a
+          href="https://githubcom/{{ usuario.github }}"
+          target="_blank"
+          *ngIf="usuario.whatsapp.length > 0"
+        >
           <i class="fab fa-github"></i>
         </a>
       </div>
     </div>
     <div
       class="log-button"
-      *ngIf="!isLogged && url != '/login' && url != '/registro'"
+      *ngIf="!isLogged && url == '/'"
     >
       <a class="nav-link link-light" routerLink="/login"
         ><i class="fas fa-sign-in-alt"></i>
         <p>Log In</p>
       </a>
     </div>
-    <div class="log-button" *ngIf="isLogged" (click)="onLogOut()">
+    <div class="log-button" *ngIf="isLogged && url == '/'" (click)="onLogOut()">
       <i class="fas fa-sign-out-alt"></i>
       <p>Log Out</p>
     </div>

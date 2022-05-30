@@ -27,16 +27,18 @@ export class MenuComponent implements OnInit {
 
   ngOnInit() {
     if (this.tokenService.getToken()) {
-      this.usuarioService
-        .getByUsername(window.sessionStorage.getItem('AuthUserName')!)
-        .subscribe((data) => {
-          this.usuario = data;
-        });
       if (
         window.sessionStorage.getItem('AuthUserName') ==
           this.activatedRoute.snapshot.paramMap.get('usuario') ||
         this.activatedRoute.snapshot.paramMap.get('usuario') == null
       ) {
+        this.usuarioService
+          .getByUsername(window.sessionStorage.getItem('AuthUserName')!)
+          .subscribe((data) => {
+            this.usuario = data;
+            console.log('Muestro whatsapp');
+            console.log(this.usuario.whatsapp);
+          });
         this.isLogged = true;
       } else {
         this.usuarioService

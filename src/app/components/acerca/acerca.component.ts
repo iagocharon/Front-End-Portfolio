@@ -13,7 +13,6 @@ export class AcercaComponent implements OnInit {
   usuario!: Usuario;
   isLogged: boolean = false;
 
-
   constructor(
     private usuarioService: UsuarioService,
     private tokenService: TokenService,
@@ -22,16 +21,18 @@ export class AcercaComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.tokenService.getToken()) {
-      this.usuarioService
-        .getByUsername(window.sessionStorage.getItem('AuthUserName')!)
-        .subscribe((data) => {
-          this.usuario = data;
-        });
       if (
         window.sessionStorage.getItem('AuthUserName') ==
           this.activatedRoute.snapshot.paramMap.get('usuario') ||
         this.activatedRoute.snapshot.paramMap.get('usuario') == null
       ) {
+        this.usuarioService
+          .getByUsername(window.sessionStorage.getItem('AuthUserName')!)
+          .subscribe((data) => {
+            this.usuario = data;
+            console.log('Muestro usuario');
+            console.log(this.usuario);
+          });
         this.isLogged = true;
       } else {
         this.usuarioService
@@ -50,7 +51,6 @@ export class AcercaComponent implements OnInit {
   }
 
   OnUpdate() {
-    this.usuarioService.updateUsuario(this.usuario).subscribe((data) => {
-    });
+    this.usuarioService.updateUsuario(this.usuario).subscribe((data) => {});
   }
 }

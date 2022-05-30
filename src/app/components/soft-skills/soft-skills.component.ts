@@ -35,31 +35,31 @@ export class SoftSkillsComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.tokenService.getToken()) {
-      this.usuarioService
-        .getByUsername(window.sessionStorage.getItem('AuthUserName')!)
-        .subscribe((data) => {
-          this.usuario = data;
-        });
-      this.usuarioService
-        .getSoftSkills(window.sessionStorage.getItem('AuthUserName')!)
-        .subscribe((data) => {
-          this.softSkills = data;
-          this.softSkills = this.softSkills.sort((a, b) =>
-            a.id! < b.id! ? -1 : 1
-          );
-          let aux: number[] = [];
-          for (let i = 0; i < this.softSkills.length; i++) {
-            if (i % 2 == 0) {
-              aux.push(i);
-            }
-          }
-          this.indiceFilas = aux;
-        });
       if (
         window.sessionStorage.getItem('AuthUserName') ==
           this.activatedRoute.snapshot.paramMap.get('usuario') ||
         this.activatedRoute.snapshot.paramMap.get('usuario') == null
       ) {
+        this.usuarioService
+          .getByUsername(window.sessionStorage.getItem('AuthUserName')!)
+          .subscribe((data) => {
+            this.usuario = data;
+          });
+        this.usuarioService
+          .getSoftSkills(window.sessionStorage.getItem('AuthUserName')!)
+          .subscribe((data) => {
+            this.softSkills = data;
+            this.softSkills = this.softSkills.sort((a, b) =>
+              a.id! < b.id! ? -1 : 1
+            );
+            let aux: number[] = [];
+            for (let i = 0; i < this.softSkills.length; i++) {
+              if (i % 2 == 0) {
+                aux.push(i);
+              }
+            }
+            this.indiceFilas = aux;
+          });
         this.isLogged = true;
       } else {
         this.isLogged = false;
